@@ -6,7 +6,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
-
 class FileManagerService implements FileManagerServiceInterface
 {
     private $postImageDirectory;
@@ -39,13 +38,13 @@ class FileManagerService implements FileManagerServiceInterface
 
 
     public function removePostImage(string $fileName)
-   {
-       $fileSystem = new Filesystem();
-       $fileImage = $this->getPostImageDirectory().''.$fileName;
-       try {
-           $fileSystem->remove($fileImage);
-       } catch (IOExceptionInterface $exception){
-           echo $exception->getMessage();
-       }
-   }
+    {
+        $fileSystem = new Filesystem();
+        $fileImage = $this->getPostImageDirectory().''.$fileName;
+        try {
+            $fileSystem->remove($fileImage);
+        } catch (IOExceptionInterface $exception) {
+            echo $exception->getMessage();
+        }
+    }
 }
