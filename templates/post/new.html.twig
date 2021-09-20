@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Post{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <div class="justify-content-center">
+      <h1>Create new Post</h1>
+
+      {{ include('post/_form.html.twig') }}
+
+    </div>
+
+  </div>
+{% endblock %}

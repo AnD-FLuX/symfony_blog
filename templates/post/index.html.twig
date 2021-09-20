@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Post index{% endblock %}
+
+{% block body %}
+  <div class="container">
+
+    <h1>Post index</h1>
+    {% for post in posts %}
+
+      <div class="col-8 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title">{{ post.title }}</h2>
+            <p style="float:right">&nbsp;|
+              {{ post.createdAt ? post.createdAt|date("F j, Y, g:i a") : ' ' }}</p>
+            <p style="float:right">by
+              {{ post.user }}
+            </p>
+          </div>
+          <div class="card-footer">
+            <a class="btn btn-primary btn-sm" href="{{ path('post_show', {'id': post.id}) }}">More info</a>
+
+          </div>
+        </div>
+
+      </div>
+    {% else %}
+
+      <h1>no records found</h1>
+
+    {% endfor %}
+
+    <li href="#" class="list-group-item text-left">
+      <div class="navigation text-center">
+        {{ knp_pagination_render(posts) }}
+      </div>
+    </li>
+  </div>
+{% endblock %}

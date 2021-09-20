@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Post{% endblock %}
+
+{% block body %}
+  <div class="container mt-5">
+
+    <div class="mb-5">
+      <div class="card h-100">
+        <div class="card-body">
+          <h2 class="card-title">{{ post.title }}</h2>
+
+          <p style="float:right">&nbsp;|
+            {{ post.createdAt ? post.createdAt|date("F j, Y, g:i a") : ' ' }}</p>
+          <p style="float:right">by
+            {{ post.user }}
+          </p>
+        </div>
+
+        <img src="{{ asset('uploads/post/') }}{{ post.image }}" style="width: 300px">
+
+      </div>
+      <div class="card-footer">
+
+        <a class="btn btn-warning" href="{{ path('post_edit', {'id': post.id}) }}">Edit post</a>
+        {{ include('post/_delete_form.html.twig') }}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
