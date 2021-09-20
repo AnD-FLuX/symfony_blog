@@ -24,7 +24,7 @@ class PostController extends AbstractController
         $result = $paginator->paginate(
           $posts,
           $request->query->getInt('page', 1),
-          $request->query->getInt('limit', 5)
+          $request->query->getInt('limit', 10)
         );
 
         return $this->render('post/index.html.twig', [
