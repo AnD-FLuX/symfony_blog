@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
 
-
 #[Route('/post')]
 class PostController extends AbstractController
 {
@@ -22,9 +21,9 @@ class PostController extends AbstractController
     {
         $posts = $postRepository->findAll();
         $result = $paginator->paginate(
-          $posts,
-          $request->query->getInt('page', 1),
-          $request->query->getInt('limit', 10)
+            $posts,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 10)
         );
 
         return $this->render('post/index.html.twig', [
@@ -40,13 +39,14 @@ class PostController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-          $image = $form->get('image')->getData();
-          if ($image){
-            $fileName = $fileManagerService->imagePostUpload($image);
-            $post->setImage($fileName);
-          }
-           $post->setUser($this->getUser());
-           $entityManager = $this->getDoctrine()->getManager();
+            $image = $form->get('image')->getData();
+            if ($image) {
+                $fileName = $fileManagerService->imagePostUpload($image);
+                $post->setImage($fileName);
+            }
+            $post->setUser($this->getUser());
+
+            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($post);
             $entityManager->flush();
 
@@ -75,17 +75,16 @@ class PostController extends AbstractController
 
         $image = $form->get('image')->getData();
         $imageOld = $post->getImage();
-        if($image){
-          if($imageOld){
-            $fileManagerService->removePostImage($imageOld);
-          }
-          $fileName = $fileManagerService->imagePostUpload($image);
-          $post->setImage($fileName);
+        if ($image) {
+            if ($imageOld) {
+                $fileManagerService->removePostImage($imageOld);
+            }
+            $fileName = $fileManagerService->imagePostUpload($image);
+            $post->setImage($fileName);
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
             return $this->redirectToRoute('post_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -99,11 +98,10 @@ class PostController extends AbstractController
     public function delete(Request $request, Post $post, FileManagerServiceInterface $fileManagerService): Response
     {
         if ($this->isCsrfTokenValid('delete'.$post->getId(), $request->request->get('_token'))) {
-
             $image = $post->getImage();
-            if($image){
+            if ($image) {
                 $fileManagerService->removePostImage($image);
-              }
+            }
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($post);
